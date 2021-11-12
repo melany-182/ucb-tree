@@ -1,14 +1,14 @@
 package bo.edu.ucb.est;
 
-public class Node <D extends Comparable<D> > {
+public class Node<D extends Comparable<D>> {
     private D data;
     private Node<D> left;
     private Node<D> right;
 
     public Node(D data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
+        this.data=data;
+        this.left=null;
+        this.right=null;
     }
 
     public D getData() {
@@ -16,7 +16,7 @@ public class Node <D extends Comparable<D> > {
     }
 
     public void setData(D data) {
-        this.data = data;
+        this.data=data;
     }
 
     public Node<D> getLeft() {
@@ -24,7 +24,7 @@ public class Node <D extends Comparable<D> > {
     }
 
     public void setLeft(Node<D> left) {
-        this.left = left;
+        this.left=left;
     }
 
     public Node<D> getRight() {
@@ -32,6 +32,6 @@ public class Node <D extends Comparable<D> > {
     }
 
     public void setRight(Node<D> right) {
-        this.right = right;
+        this.right=right;
     }
 }
