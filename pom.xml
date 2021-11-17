@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>bo.edu.ucb.est</groupId>
-  <artifactId>ucb_tree</artifactId>
+  <artifactId>ucb-tree</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>ucb_tree</name>
+  <name>ucb-tree</name>
   <url>http://maven.apache.org</url>
   <properties>
     <maven.compiler.target>11</maven.compiler.target>
