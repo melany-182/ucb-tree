@@ -190,7 +190,72 @@ public class Tree<D extends Comparable<D>> {
     hijo. En este caso, encontramos el nodo más pequeño en el subárbol derecho del nodo minnode. Reemplace
     el valor del nodo que se eliminará con el valor de minnode y llame de forma recursiva a delete en este nodo.
     */
+    
+    // FALTA CONSIDERAR SI ES EL NODO RAÍZ *******
     public void remove(D data) {
-        
+        // BÚSQUEDA
+        Node<D> current=root;
+        Node<D> padre=null;
+        Node<D> eliminacion=null;
+        for (;;) {
+            if ((current.getData()).compareTo(data)>0) {
+                padre=current;
+                current=current.getLeft();
+            }
+            else if ((current.getData()).compareTo(data)<0) {
+                padre=current;
+                current=current.getRight();
+            }
+            else { // ya lo encontró
+                eliminacion=current;
+                break;
+            }
+        }
+        if (eliminacion.getLeft()==null && eliminacion.getRight()==null) { // si es un nodo hoja
+            if (padre.getLeft()==eliminacion) {
+                padre.setLeft(null);
+            }
+            else {
+                padre.setRight(null);
+            }
+        }
+        else if (eliminacion.getLeft()==null || eliminacion.getRight()==null) { // si el nodo tiene un solo hijo
+            if (padre.getLeft()==eliminacion) {
+                if (eliminacion.getRight()==null && eliminacion.getLeft()!=null) {
+                    padre.setLeft(eliminacion.getLeft());
+                }
+                else if (eliminacion.getRight()!=null && eliminacion.getLeft()==null) {
+                    padre.setLeft(eliminacion.getRight());
+                }
+            }
+            else {
+                if (eliminacion.getRight()==null && eliminacion.getLeft()!=null) {
+                    padre.setRight(eliminacion.getLeft());
+                }
+                else if (eliminacion.getRight()!=null && eliminacion.getLeft()==null) {
+                    padre.setRight(eliminacion.getRight());
+                }
+            }
+        }
+        else { // si el nodo tiene ambos hijos
+            if (eliminacion.getRight()!=null && eliminacion.getLeft()!=null) {
+                Node<D> minNode=null;
+                // BÚSQUEDA DEL minNode
+                for (Node<D> pointer=eliminacion.getRight(); pointer!=null;) {
+                    minNode=pointer;
+                    pointer=pointer.getLeft();
+                }
+                System.out.println("Se reemplazará con este: "+minNode.getData());
+                remove(minNode.getData());
+                minNode.setRight(eliminacion.getRight());
+                minNode.setLeft(eliminacion.getLeft());
+                if (padre.getLeft()==eliminacion) {
+                    padre.setLeft(minNode);
+                }
+                else {
+                    padre.setRight(minNode);
+                }
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@ public class App {
         Tree.printInOrder(tree.getRoot());
         System.out.println("FIN");
         System.out.println();
+        tree.remove(4);
         tree.printInOrderNonRecursive();
         System.out.println("FIN");
         
