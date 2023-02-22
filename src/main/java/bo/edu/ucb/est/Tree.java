@@ -2,18 +2,18 @@ package bo.edu.ucb.est;
 import java.util.Stack;
 
 public class Tree<D extends Comparable<D>> {
-    private Node root;
+    private Node<D> root;
 
     // altura??
     public Tree() {
     
     }
 
-    public Node getRoot() {
+    public Node<D> getRoot() {
         return root;
     }
 
-    public void setRoot(Node root) {
+    public void setRoot(Node<D> root) {
         this.root=root;
     }
 
@@ -173,23 +173,124 @@ public class Tree<D extends Comparable<D>> {
         }
     }
     
+    public void remove(D data) {
+        Node<D> nodeToDelete=findByData(data);
+        if (nodeToDelete!=null) { // si se encontró el elemento
+            if (nodeToDelete.getLeft()==null && nodeToDelete.getRight()==null) { // si es un nodo hoja
+                // busco al padre y elimino el nodo de él
+                Node<D> parent=findParentByData(data);
+                if (parent!=null) {
+                    // verifico si la rama izquierda es el dato que quiero eliminar
+                    if ((parent.getLeft().getData()).compareTo(data)==0) {
+                        parent.setLeft(null);
+                    }
+                    // si no es el de la izquierda, es el de la derecha
+                    else {
+                        parent.setRight(null);
+                    }
+                }
+                else { // estoy eliminando el nodo raíz que no tiene ningún hijo
+                    root=null;
+                }
+                
+            }
+            else if ((nodeToDelete.getLeft()!=null && nodeToDelete.getRight()==null) || (nodeToDelete.getLeft()==null && nodeToDelete.getRight()!=null)) { // si el nodo tiene un solo hijo
+                Node<D> parent=findParentByData(data);
+                // determino el nodo hijo
+                Node<D> child=null;
+                if (nodeToDelete.getLeft()!=null) {
+                    child=nodeToDelete.getLeft();
+                }
+                else {
+                    child=nodeToDelete.getRight();
+                }
+                if (parent!=null) {
+                    // pregunto si el nodo a eliminar del padre es izquierda o derecha
+                    if ((parent.getLeft().getData()).compareTo(data)==0) {
+                        parent.setLeft(child);
+                    }
+                    else {
+                        parent.setRight(child);
+                    }
+                }
+                else { // quiero eliminar el nodo raíz, y solo tiene una rama
+                    root=child;
+                }
+            }
+            else { // si el nodo tiene ambos hijos
+                
+            }
+        }
+    }
+    
+    /*
+    Retorna el nodo que contiene el dato, o null si el dato no existe.
+    @param data
+    @return el nodo que contiene el dato, o null si el dato no existe.
+    */
+    private Node<D> findByData(D data) {
+        Node<D> result=null;
+        Node<D> current=root;
+        while (current!=null) {
+            if ((current.getData()).compareTo(data)>0) { // bajar por la izquierda
+                current=current.getLeft();
+            }
+            else if ((current.getData()).compareTo(data)<0) { // bajar por la derecha
+                current=current.getRight();
+            }
+            else {
+                result=current;
+                break;
+            }
+        }
+        return result;
+    }
+    
+     /*
+    Retorna el nodo padre cuyo hijo contiene el dato, o null si el dato no existe.
+    @param data
+    @return el nodo padre cuyo hijo contiene el dato, o null si el dato no existe.
+    */
+    private Node<D> findParentByData(D data) {
+        Node<D> result=null;
+        Node<D> current=root;
+        Node<D> parent=null;
+        while (current!=null) {
+            if ((current.getData()).compareTo(data)>0) { // bajar por la izquierda
+                parent=current;
+                current=current.getLeft();
+            }
+            else if ((current.getData()).compareTo(data)<0) { // bajar por la derecha
+                parent=current;
+                current=current.getRight();
+            }
+            else {
+                result=parent;
+                break;
+            }
+        }
+        return result;
+    }
+    
+    // private static void removeDataFromTree(Node<?> root,? data) {
+    
     /*
     Elimina un nodo del árbol y lo rebalancea.
     @param data
     
-    1. Si el nodo que se va a eliminar no tiene hijo, es una hoja.
+    1. Si el nodo que se va a eliminar no tiene hijos, es una hoja.
     Este es el caso más simple; dado que un nodo hoja no tiene hijos, no necesitamos preocuparnos por nada.
     Podemos reemplazar el nodo hoja con null y liberar el espacio asignado a este nodo.
     
     2. Si el nodo que se va a eliminar tiene un solo hijo (hijo izquierdo o derecho).
-    En este caso, almacenamos el hijo del nodo y eliminamos el nodo de su posición original. Luego, el nodo
-    hijo se inserta en la posición original del nodo eliminado.
+    En este caso, almacenamos el hijo del nodo y eliminamos el nodo de su posición original.
+    Luego, el nodo hijo se inserta en la posición original del nodo eliminado.
     
     3. Si el nodo que se va a eliminar tiene hijos, hijo izquierdo y derecho.
-    Este es el caso más complicado porque aquí, no podemos simplemente eliminar o reemplazar el nodo con su
-    hijo. En este caso, encontramos el nodo más pequeño en el subárbol derecho del nodo minnode. Reemplace
-    el valor del nodo que se eliminará con el valor de minnode y llame de forma recursiva a delete en este nodo.
-    */
+    Este es el caso más complicado porque aquí, no podemos simplemente eliminar o reemplazar el nodo con su hijo.
+    En este caso, encontramos el nodo más pequeño en el subárbol derecho del nodo minnode.
+    Reemplace el valor del nodo que se eliminará con el valor de minnode y llame de forma recursiva a delete en este nodo.
+    
     
     // FALTA CONSIDERAR SI ES EL NODO RAÍZ *******
     public void remove(D data) {
@@ -197,7 +298,7 @@ public class Tree<D extends Comparable<D>> {
         Node<D> current=root;
         Node<D> padre=null;
         Node<D> eliminacion=null;
-        for (;;) {
+        while (current!=null) {
             if ((current.getData()).compareTo(data)>0) {
                 padre=current;
                 current=current.getLeft();
@@ -258,4 +359,5 @@ public class Tree<D extends Comparable<D>> {
             }
         }
     }
+    */
 }

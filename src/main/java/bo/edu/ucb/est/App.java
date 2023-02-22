@@ -7,16 +7,22 @@ import java.util.Stack;
 public class App {
     public static void main(String[] args) {
         Tree<Integer> tree=new Tree<Integer>();
-        tree.addRecursive(5); // tree.add(5)
-        tree.addRecursive(4); // tree.add(4)
-        tree.addRecursive(7); // tree.add(7)
-        tree.addRecursive(6); // tree.add(6)
+        tree.addRecursive(50); // tree.add(50)
+        tree.addRecursive(20); // tree.add(20)
+        tree.addRecursive(40); // tree.add(40)
+        tree.addRecursive(35); // tree.add(35)
+        tree.addRecursive(70); // tree.add(70)
+        tree.addRecursive(80); // tree.add(80)
+        tree.addRecursive(60); // tree.add(60)
+        tree.addRecursive(90); // tree.add(90)
+        System.out.println("Recursive: ");
         Tree.printInOrder(tree.getRoot());
-        System.out.println("FIN");
-        System.out.println();
+        System.out.println("FIN\n");
         tree.remove(4);
+        // tree.remove(8); // NullPointerException
+        System.out.println("Non recursive: ");
         tree.printInOrderNonRecursive();
-        System.out.println("FIN");
+        System.out.println("FIN\n");
         
         // Necesitamos una pila, probamos java.util.stack
         Stack<String> stringStack=new Stack<>();
